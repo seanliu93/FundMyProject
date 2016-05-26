@@ -2,4 +2,4 @@
 
 FundMyProject is a basic Rails app that allows people to fund user created projects!
 
-To view this application, make sure you have Ruby on Rails installed. The database has been seeded with dummy data, which you can view in db/seeds.rb
+Make sure you have Ruby on Rails installed. The database has been seeded with dummy data, which you can view in db/seeds.rb. To launch the application, run 'rails s' in the command line in the root directory of this project and go to localhost:3000 in your browser.
