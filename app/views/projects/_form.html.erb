@@ -1,0 +1,12 @@
+<%= form_for @project do |f| %>
+  <%= f.hidden_field :user_id %><br>
+  <%= f.label :title %><br>
+  <%= f.text_field :title %><br><br>
+  <%= f.label :description %><br>
+  <%= f.text_field :description %><br><br>
+  <%= f.label :fund_goal %><br>
+  <%= f.number_field :fund_goal %><br><br>
+  <label for"project_end_date">End Date (yyyy/mm/dd)</label><br>
+  <%= f.text_field :end_date %><br><br>
+  <%= f.submit %><br>
+<% end %>
