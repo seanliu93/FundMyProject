@@ -3,12 +3,12 @@
      <li class="navbar-text">Signed in as <%= current_user.email %></li>
      <li><%= link_to "Sign out", destroy_user_session_url, method: :delete %></li>
      <li><%= link_to "Profile", profile_path(current_user) %></li>
-     <li><%= link_to "Home", home_path %></li>
+     <li><%= link_to "Home", root_path %></li>
      <li><%= link_to "Start a new project", new_project_path %></li>
    <% else %>
      <li><%= link_to "Sign up", new_user_registration_path %></li>
      <li><%= link_to "Sign in", new_user_session_path %></li>
-     <li><%= link_to "Sign in with Facebook", user_omniauth_authorize_path(:facebook) %></li>
-     <li><%= link_to "Home", home_path %></li>
+     <li><%= link_to "Sign in with Facebook", "/auth/facebook" %></li>
+     <li><%= link_to "Home", root_path %></li>
    <% end %>
 </ul><br><br>

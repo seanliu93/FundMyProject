@@ -1,8 +1,7 @@
 class ProjectsController < ApplicationController
   before_action :set_project, only: [:show, :edit, :update, :destroy]
   def index
-    Project.update
-    @projects = Project.order("end_date asc")
+    @ending_projects = Project.ending_projects
   end
 
   def show

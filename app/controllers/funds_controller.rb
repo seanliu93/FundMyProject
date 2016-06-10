@@ -1,6 +1,10 @@
 class FundsController < ApplicationController
   def index
-    @funds = Fund.all
+    if params[:project_id]
+      @funds = Project.find(params[:project_id]).funds
+    else
+      @funds = Fund.all
+    end
   end
 
   def create

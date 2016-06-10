@@ -14,12 +14,8 @@ class Project < ActiveRecord::Base
     end
   end 
 
-  def self.update
-    Project.all.each do |p|
-      if p.end_date == Date.today
-        p.destroy
-      end
-    end
+  def self.ending_projects
+    @ending_projects = Project.where("end_date >= ?", Date.today).order("end_date asc")
   end
 
   def funded

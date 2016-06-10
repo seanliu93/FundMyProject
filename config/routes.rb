@@ -1,10 +1,11 @@
 Rails.application.routes.draw do
-  devise_for :users, :controllers => { :omniauth_callbacks => "users/omniauth_callbacks" }
+  devise_for :users
   resources :funds
   resources :projects
   get 'projects/:id/delete' => 'projects#destroy', as: :destroy_project
   get 'users/:id' => 'users/profiles#show', as: :profile
-  root 'projects#index', as: 'home'
+  get '/auth/facebook/callback' => 'sessions#create'
+  root 'projects#index'
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 

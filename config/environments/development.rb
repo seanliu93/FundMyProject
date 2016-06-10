@@ -39,4 +39,6 @@ Rails.application.configure do
   config.action_mailer.default_url_options = { host: 'localhost', port: 3000 }
   # Raises error for missing translations
   # config.action_view.raise_on_missing_translations = true
+  ENV['FACEBOOK_APP_ID'] = "1167125939999757";
+  ENV['FACEBOOK_SECRET'] = "6f5d1ef3492c019d4bc5f077870709e7";
 end
