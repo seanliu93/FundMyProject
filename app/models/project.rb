@@ -7,6 +7,7 @@ class Project < ActiveRecord::Base
   has_many :funds
   has_many :backers, -> { distinct }, through: :funds
   validate :end_date_cannot_be_in_the_past
+  has_many :categories
 
   def end_date_cannot_be_in_the_past
     if end_date.present? && end_date < Date.today
