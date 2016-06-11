@@ -19,5 +19,9 @@
   <%= f.number_field :fund_goal %><br><br>
   <label for"project_end_date">End Date (yyyy/mm/dd)</label><br>
   <%= f.text_field :end_date %><br><br>
+  <label>Select Relevant Categories:</label><br>
+  <%= collection_check_boxes(:project, :category_ids, Category.all, :id, :title) %><br>
+  <label>And/Or Create a New Category:</label><br>
+  <input type="text" name="project[new_category]" id="new_project_category"><br><br>
   <%= f.submit %><br>
 <% end %>

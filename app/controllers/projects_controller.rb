@@ -37,10 +37,7 @@ class ProjectsController < ApplicationController
   end
 
   def update
-    @project.title = params[:project][:title]
-    @project.description = params[:project][:description]
-    @project.fund_goal = params[:project][:fund_goal]
-    @project.end_date = params[:project][:end_date]
+    @project.update(project_params)
     if @project.save
       redirect_to project_path(@project)
     else
@@ -61,6 +58,6 @@ class ProjectsController < ApplicationController
   end
 
   def project_params
-    params.require(:project).permit(:user_id, :title, :description, :fund_goal, :end_date)
+    params.require(:project).permit(:user_id, :title, :description, :fund_goal, :end_date, :new_category, category_ids:[])
   end
 end

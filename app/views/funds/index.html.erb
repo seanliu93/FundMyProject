@@ -1,0 +1,6 @@
+<h1>All Funds for <%= @project.title%></h1>
+<% @project.funds.each do |f| %>
+  <p>Email: <%= User.find(f.backer_id).email%></p>
+  <p>Amount: <%= f.amount %></p>
+  <br>
+<% end %>

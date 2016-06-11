@@ -1,7 +1,8 @@
 class FundsController < ApplicationController
   def index
     if params[:project_id]
-      @funds = Project.find(params[:project_id]).funds
+      @project = Project.find(params[:project_id])
+      @funds = @project.funds
     else
       @funds = Fund.all
     end

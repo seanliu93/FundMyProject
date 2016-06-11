@@ -1,7 +1,11 @@
 Rails.application.routes.draw do
   devise_for :users
-  resources :funds
-  resources :projects
+ 
+  resources :projects do 
+     resources :funds
+   end
+   resources :funds
+   resources :categories
   get 'projects/:id/delete' => 'projects#destroy', as: :destroy_project
   get 'users/:id' => 'users/profiles#show', as: :profile
   get '/auth/facebook/callback' => 'sessions#create'

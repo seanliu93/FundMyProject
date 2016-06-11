@@ -4,6 +4,10 @@
 <p>Amount Funded: <%= @project.funded %> / <%= @project.fund_goal%> ( <%= @project.funded_percent %>%)</p>
 <p>End Date: <%= @project.end_date %></p>
 <br>
+<h4>Associated Categories: </h4>
+<% @project.categories.each do |c| %>
+  <p><%= link_to c.title, category_path(c)%></p>
+<% end %>
 <h4>Current Backers:</h4>
 <% @project.backers.each do |b| %>
   <p><%= link_to b.email, profile_path(b) %></p>
@@ -19,5 +23,5 @@
     <% end %>
 <% else %>
   <p>Want to help fund this project? <%= link_to "Sign In", new_user_session_path %></p>
-
 <% end %>
+<%= link_to "Check Out Who's Funded for This Project", project_funds_path(@project) %>
