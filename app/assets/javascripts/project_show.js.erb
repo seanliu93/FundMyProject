@@ -1,0 +1,34 @@
+$(function() {
+	$('#new_fund').submit(function(e) {
+		e.preventDefault();
+		var values = $(this).serialize();
+
+		var posting = $.post('/funds', values);
+    // response success handling function
+		posting.done(function(data) {
+      // update fund info
+      updateFundAmount(data["amount"])
+      // show success notice
+      $('.notice').text("You successfully funded to this project!")
+      $('.alert').text("");
+      // clear the input field
+      $('#fund_amount').val("")
+		});
+		posting.fail(function(xhr, status, text) {
+      $('.notice').text("");
+			$('.alert').text(xhr.responseText);
+		});
+	});
+});
+
+function updateFundAmount(amount) {
+	var words = $('#funded').text().split(" ");
+	// calculate new fund amount
+	var new_amount = eval(amount+"+"+words[2]);
+	words[2] = String(new_amount);
+	// calculate new fund percentage
+	var new_percentage = Math.round(eval(words[2]+words[3]+words[4])*100);
+	words[6] = String(new_percentage)+"%";
+	// insert updated string into #funded p tag
+	$('#funded').text(words.join(" "));
+}

@@ -12,12 +12,12 @@ class FundsController < ApplicationController
     @fund = Fund.new(fund_params)
     if @fund.save
       if @fund.submit
-        redirect_to project_path(@fund.project_id), notice: "Successfully funded to this project!"
+        render json: @fund, status: 201
       else
-        redirect_to project_path(@fund.project_id), alert: "You don't have enough in your balance to fund that much!"
+        render plain: "You don't have enough in your balance to fund that much!", status: 403
       end
     else
-      redirect_to project_path(@fund.project_id), alert: "Invalid fund amount entered!"
+      render plain: "Invalid fund amount entered!", status: 403
     end
   end
 
