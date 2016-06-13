@@ -2,13 +2,20 @@ class ProjectsController < ApplicationController
   before_action :set_project, only: [:show, :edit, :update, :destroy]
   def index
     @ending_projects = Project.ending_projects
+    respond_to do |format|
+      format.html {render :index}
+      format.json {render json: @ending_projects}
+    end
   end
 
   def show
     if user_signed_in?
       @fund = Fund.new(backer_id: current_user.id, project_id: @project.id)
     else
-
+    end
+    respond_to do |format|
+      format.html {render :show}
+      format.json {render json: @project}
     end
   end
 

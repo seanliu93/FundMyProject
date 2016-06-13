@@ -24,11 +24,9 @@ $(function() {
 function updateFundAmount(amount) {
 	var words = $('#funded').text().split(" ");
 	// calculate new fund amount
-	var new_amount = eval(amount+"+"+words[2]);
-	words[2] = String(new_amount);
+	words[2] = String(eval(amount+"+"+words[2]));
 	// calculate new fund percentage
-	var new_percentage = Math.round(eval(words[2]+words[3]+words[4])*100);
-	words[6] = String(new_percentage)+"%";
+	words[6] = String(Math.round(eval(words[2]+words[3]+words[4])*100))+"%";
 	// insert updated string into #funded p tag
 	$('#funded').text(words.join(" "));
 }
