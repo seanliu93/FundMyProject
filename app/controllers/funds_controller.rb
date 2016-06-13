@@ -21,6 +21,11 @@ class FundsController < ApplicationController
     end
   end
 
+  def show
+    @fund = Fund.find(params[:id])
+    render json: @fund, status:201
+  end
+
   private
   def fund_params
    params.require(:fund).permit(:backer_id, :project_id, :amount)

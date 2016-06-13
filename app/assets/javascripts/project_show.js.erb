@@ -7,7 +7,8 @@ $(function() {
     // response success handling function
 		posting.done(function(data) {
       // update fund info
-      updateFundAmount(data["amount"])
+      var fund = new Fund(data["backer"]["email"], data["project"]["title"], data["amount"]);
+      updateFundAmount(fund.amount)
       // show success notice
       $('.notice').text("You successfully funded to this project!")
       $('.alert').text("");
@@ -19,6 +20,8 @@ $(function() {
 			$('.alert').text(xhr.responseText);
 		});
 	});
+
+  $('')
 });
 
 function updateFundAmount(amount) {
@@ -29,4 +32,13 @@ function updateFundAmount(amount) {
 	words[6] = String(Math.round(eval(words[2]+words[3]+words[4])*100))+"%";
 	// insert updated string into #funded p tag
 	$('#funded').text(words.join(" "));
+}
+
+function Fund(backer_email, project_title, amount) {
+  this.backer_email = backer_email;
+  this.project_title = project_title;
+  this.amount = amount;
+  this.print = function() {
+    return (this.backer_email + " funded $" + this.amount + ".");
+  }
 }
