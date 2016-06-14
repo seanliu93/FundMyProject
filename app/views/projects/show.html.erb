@@ -1,4 +1,4 @@
-<h1><%= @project.title%> <%= show_edit %> <%= show_delete %></h1>
+<h1 id="project_<%= @project.id %>"><%= @project.title%> <%= show_edit %> <%= show_delete %></h1>
 <p><%= @project.description %></p>
 <p>Owned by: <%= link_to @project.user_email, profile_path(@project.user)%></p>
 <p id="funded">Amount Funded: <%= @project.funded %> / <%= @project.fund_goal%> ( <%= @project.funded_percent %>% )</p>
@@ -24,4 +24,7 @@
 <% else %>
   <p>Want to help fund this project? <%= link_to "Sign In", new_user_session_path %></p>
 <% end %>
-<%= link_to "Check Out Who's Funded for This Project", project_funds_path(@project) %>
+<br>
+<div id="project_funds">
+<button type="button" class="btn btn-default navbar-btn">Check Out All the Funds for this Project</button>
+</div>

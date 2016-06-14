@@ -1,28 +1,50 @@
 $(function() {
+	submitFundHandler();
+	whosFundedButtonHandler();
+});
+
+function submitFundHandler() {
 	$('#new_fund').submit(function(e) {
 		e.preventDefault();
 		var values = $(this).serialize();
 
 		var posting = $.post('/funds', values);
-    // response success handling function
+		// response success handling function
 		posting.done(function(data) {
-      // update fund info
-      var fund = new Fund(data["backer"]["email"], data["project"]["title"], data["amount"]);
-      updateFundAmount(fund.amount)
-      // show success notice
-      $('.notice').text("You successfully funded to this project!")
-      $('.alert').text("");
-      // clear the input field
-      $('#fund_amount').val("")
+		  	// update fund info
+		  	var fund = new Fund(data["backer"]["email"], data["project"]["title"], data["amount"]);
+		  	updateFundAmount(fund.amount)
+		  	// show success notice
+		  	$('.notice').text("You successfully funded to this project!")
+		  	$('.alert').text("");
+		  	// clear the input field
+		  	$('#fund_amount').val("")
 		});
 		posting.fail(function(xhr, status, text) {
-      $('.notice').text("");
+	  		$('.notice').text("");
 			$('.alert').text(xhr.responseText);
 		});
 	});
+}
 
-  $('')
-});
+function whosFundedButtonHandler() {
+	$('#project_funds button').on('click', function(e) {
+		e.preventDefault();
+		// get project_id
+		var project_id = $('h1').attr('id')[$('h1').attr('id').length-1]
+		// submit get request via ajax to get funds of this project
+		$.get("/projects/" + project_id + ".json", function(data) {
+			// convert each json fund into js object model, use print method to print fund amount
+			var project_title = data["title"];
+			// remove the button, going to display the data now
+			$('#project_funds').html("");
+			$.each(data["funds"], function(ind, fund_hash) {
+				var fund = new Fund(fund_hash["backer"]["email"], project_title, fund_hash["amount"]);
+				fund.print();
+			});
+		});
+	});
+}
 
 function updateFundAmount(amount) {
 	var words = $('#funded').text().split(" ");
@@ -39,6 +61,6 @@ function Fund(backer_email, project_title, amount) {
   this.project_title = project_title;
   this.amount = amount;
   this.print = function() {
-    return (this.backer_email + " funded $" + this.amount + ".");
+    $('#project_funds').append("<p>"+this.backer_email + " funded $" + this.amount + ".</p>");
   }
 }
