@@ -9,9 +9,11 @@
   <p><%= link_to c.title, category_path(c)%></p>
 <% end %>
 <h4>Current Backers:</h4>
+<div id="current_backers">
 <% @project.backers.each do |b| %>
   <p><%= link_to b.email, profile_path(b) %></p>
 <% end %>
+</div>
 <br>
 <% if user_signed_in? %>
   <p>Interested? Fund an amount below:</p>

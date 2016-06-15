@@ -1,7 +1,7 @@
-$(function() {
+var ready = function() {
 	submitFundHandler();
 	whosFundedButtonHandler();
-});
+};
 
 function submitFundHandler() {
 	$('#new_fund').submit(function(e) {
@@ -12,8 +12,9 @@ function submitFundHandler() {
 		// response success handling function
 		posting.done(function(data) {
 		  	// update fund info
-		  	var fund = new Fund(data["backer"]["email"], data["project"]["title"], data["amount"]);
-		  	updateFundAmount(fund.amount)
+		  	var fund = new Fund(data["backer"]["id"], data["backer"]["email"], data["project"]["title"], data["amount"]);
+		  	updateFundAmount(fund.amount);
+		  	updateBackers(fund);
 		  	// show success notice
 		  	$('.notice').text("You successfully funded to this project!")
 		  	$('.alert').text("");
@@ -39,7 +40,7 @@ function whosFundedButtonHandler() {
 			// remove the button, going to display the data now
 			$('#project_funds').html("");
 			$.each(data["funds"], function(ind, fund_hash) {
-				var fund = new Fund(fund_hash["backer"]["email"], project_title, fund_hash["amount"]);
+				var fund = new Fund(fund_hash["backer"]["id"], fund_hash["backer"]["email"], project_title, fund_hash["amount"]);
 				fund.print();
 			});
 		});
@@ -56,7 +57,21 @@ function updateFundAmount(amount) {
 	$('#funded').text(words.join(" "));
 }
 
-function Fund(backer_email, project_title, amount) {
+function updateBackers(fund) {
+	var present = false;
+	$.each($('#current_backers p'), function() {
+		if ($(this).text() == fund.backer_email) {
+			present = true;
+		}
+	});
+	if (!present) {
+		$('#current_backers').append('<p><a href="/users/' + fund.backer_id + '">' + fund.backer_email + '</a></p>');
+	}
+}
+
+
+function Fund(backer_id, backer_email, project_title, amount) {
+	this.backer_id = backer_id;
   this.backer_email = backer_email;
   this.project_title = project_title;
   this.amount = amount;
@@ -64,3 +79,6 @@ function Fund(backer_email, project_title, amount) {
     $('#project_funds').append("<p>"+this.backer_email + " funded $" + this.amount + ".</p>");
   }
 }
+
+$(document).ready(ready);
+$(document).on('page:load', ready);
