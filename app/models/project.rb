@@ -1,5 +1,5 @@
 class Project < ActiveRecord::Base
-  validates :title, presence: true
+  validates :title, presence: true, uniqueness: true
   validates :description, presence: true
   validates :end_date, presence: true
   validates :fund_goal, presence: true

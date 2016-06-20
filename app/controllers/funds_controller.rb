@@ -11,13 +11,11 @@ class FundsController < ApplicationController
   def create
     @fund = Fund.new(fund_params)
     if @fund.save
-      if @fund.submit
-        redirect_to project_path(@fund.project_id), notice: "Successfully funded to this project!"
-      else
-        redirect_to project_path(@fund.project_id), alert: "You don't have enough in your balance to fund that much!"
-      end
+      @fund.submit
+      redirect_to project_path(@fund.project_id), notice: "Successfully funded to this project!"
     else
-      redirect_to project_path(@fund.project_id), alert: "Invalid fund amount entered!"
+      @project = Project.find(@fund.project_id)
+      render "/projects/show"
     end
   end
 

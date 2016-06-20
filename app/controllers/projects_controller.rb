@@ -21,15 +21,11 @@ class ProjectsController < ApplicationController
   end
 
   def create
-    if Project.find_by(title: params[:project][:title]).nil?
-      @project = Project.new(project_params)
-      if @project.save
-        redirect_to project_path(@project), notice: "Project successfully created!"
-      else
-        redirect_to new_project_path(@project), alert: "Invalid input"
-      end
+    @project = Project.new(project_params)
+    if @project.save
+      redirect_to project_path(@project), notice: "Project successfully created!"
     else
-      redirect_to new_project_path(@project), alert: "Project title already taken"
+      render :new
     end
   end
  
@@ -41,7 +37,7 @@ class ProjectsController < ApplicationController
     if @project.save
       redirect_to project_path(@project)
     else
-      redirect_to new_project_path(@project), alert: "Invalid input"
+      render :edit
     end
   end
 
