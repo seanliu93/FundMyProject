@@ -32,7 +32,7 @@ function whosFundedButtonHandler() {
 	$('#project_funds button').on('click', function(e) {
 		e.preventDefault();
 		// get project_id
-		var project_id = $('h1').attr('id')[$('h1').attr('id').length-1]
+		var project_id = $('h1').attr('id')
 		// submit get request via ajax to get funds of this project
 		$.get("/projects/" + project_id + ".json", function(data) {
 			// convert each json fund into js object model, use print method to print fund amount
@@ -75,10 +75,12 @@ function Fund(backer_id, backer_email, project_title, amount) {
   this.backer_email = backer_email;
   this.project_title = project_title;
   this.amount = amount;
-  this.print = function() {
+}
+
+Fund.prototype.print = function() {
     $('#project_funds').append("<p>"+this.backer_email + " funded $" + this.amount + ".</p>");
   }
-}
+
 
 $(document).ready(ready);
 $(document).on('page:load', ready);
